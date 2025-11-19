@@ -560,18 +560,68 @@ tr.sweet-spot:hover {
                     rate,
                     monthlySavings,
                     years,
-                    reduction,
-                    isSweetSpot: rate >= 30 && rate <= 35
+                    reduction
                 });
 
                 previousYears = years;
             }
 
-            displayResults(results, salary, goal, returnRate);
+            // Identify sweet spot dynamically
+            const sweetSpotRange = identifySweetSpot(results);
+            
+            // Mark sweet spot in results
+            results.forEach(result => {
+                result.isSweetSpot = result.rate >= sweetSpotRange.start && result.rate <= sweetSpotRange.end;
+            });
+
+            displayResults(results, salary, goal, returnRate, sweetSpotRange);
+        }
+
+        // Identify sweet spot dynamically
+        function identifySweetSpot(results) {
+            const SIGNIFICANT_REDUCTION = 3; // years
+            const MARGINAL_REDUCTION = 2; // years
+            
+            let sweetSpotStart = null;
+            let sweetSpotEnd = null;
+            
+            // Find where significant reductions begin (sweet spot start)
+            for (let i = 0; i < results.length; i++) {
+                if (results[i].reduction !== null && results[i].reduction >= SIGNIFICANT_REDUCTION) {
+                    sweetSpotStart = results[i].rate;
+                    break;
+                }
+            }
+            
+            // Find where reductions become marginal (sweet spot end)
+            if (sweetSpotStart !== null) {
+                for (let i = 0; i < results.length; i++) {
+                    if (results[i].rate > sweetSpotStart && 
+                        results[i].reduction !== null && 
+                        results[i].reduction <= MARGINAL_REDUCTION) {
+                        // Sweet spot ends at the previous rate
+                        sweetSpotEnd = results[i - 1].rate;
+                        break;
+                    }
+                }
+            }
+            
+            // If no end found, extend to a reasonable default
+            if (sweetSpotStart !== null && sweetSpotEnd === null) {
+                sweetSpotEnd = Math.min(sweetSpotStart + 10, 50);
+            }
+            
+            // Fallback if no sweet spot identified (shouldn't happen with valid data)
+            if (sweetSpotStart === null) {
+                sweetSpotStart = 20;
+                sweetSpotEnd = 25;
+            }
+            
+            return { start: sweetSpotStart, end: sweetSpotEnd };
         }
 
         // Display results in table
-        function displayResults(results, salary, goal, returnRate) {
+        function displayResults(results, salary, goal, returnRate, sweetSpotRange) {
             const tableBody = document.getElementById('tableBody');
             tableBody.innerHTML = '';
 
@@ -595,17 +645,17 @@ tr.sweet-spot:hover {
                 tableBody.appendChild(row);
             });
 
-            generateInsights(results, salary, goal, returnRate);
+            generateInsights(results, salary, goal, returnRate, sweetSpotRange);
             document.getElementById('resultsSection').classList.add('show');
         }
 
         // Generate insights
-        function generateInsights(results, salary, goal, returnRate) {
+        function generateInsights(results, salary, goal, returnRate, sweetSpotRange) {
             const insightsContent = document.getElementById('insightsContent');
             
             // Find sweet spot data
-            const sweetSpot30 = results.find(r => r.rate === 30);
-            const sweetSpot35 = results.find(r => r.rate === 35);
+            const sweetSpotStart = results.find(r => r.rate === sweetSpotRange.start);
+            const sweetSpotEnd = results.find(r => r.rate === sweetSpotRange.end);
             
             // Find biggest reductions
             const sortedByReduction = results
@@ -616,8 +666,18 @@ tr.sweet-spot:hover {
             // Last rate (50%)
             const lastRate = results[results.length - 1];
 
+            const yearsReductionInSweetSpot = sweetSpotStart.years - sweetSpotEnd.years;
+            const additionalSavings = sweetSpotEnd.monthlySavings - sweetSpotStart.monthlySavings;
+
             let html = `
-                <p><strong>🎯 Sweet Spot Identificado (30-35%):</strong> Esta faixa representa o ponto ideal entre esforço e resultado. Poupar ${sweetSpot30.rate}% do seu salário leva aproximadamente <strong>${formatYears(sweetSpot30.years)} anos</strong> para atingir sua meta de R$ ${formatCurrency(goal)}.</p>
+                <p><strong>🎯 Sweet Spot Identificado: ${sweetSpotRange.start}% - ${sweetSpotRange.end}%</strong></p>
+                
+                <p>Esta faixa representa o ponto ideal entre esforço e resultado para seu cenário específico:</p>
+                <ul style="margin-left: var(--space-20); margin-top: var(--space-8); margin-bottom: var(--space-12);">
+                    <li>No <strong>início do sweet spot (${sweetSpotRange.start}%)</strong>: ${formatYears(sweetSpotStart.years)} anos para atingir R$ ${formatCurrency(goal)}</li>
+                    <li>No <strong>final do sweet spot (${sweetSpotRange.end}%)</strong>: ${formatYears(sweetSpotEnd.years)} anos para atingir a meta</li>
+                    <li><strong>Ganho:</strong> ${formatYears(yearsReductionInSweetSpot)} anos economizados com um esforço adicional de R$ ${formatCurrency(additionalSavings)}/mês</li>
+                </ul>
                 
                 <p><strong>📊 Maiores Ganhos:</strong> As maiores reduções de tempo ocorrem nas transições iniciais:
                 <ul style="margin-left: var(--space-20); margin-top: var(--space-8);">`;
@@ -628,9 +688,9 @@ tr.sweet-spot:hover {
 
             html += `</ul></p>
                 
-                <p><strong>💰 Após o Sweet Spot:</strong> Aumentar a taxa de poupança acima de 35% traz retornos decrescentes. Por exemplo, poupar 50% reduz o tempo para <strong>${formatYears(lastRate.years)} anos</strong>, uma economia adicional de apenas ${formatYears(sweetSpot35.years - lastRate.years)} anos comparado aos 35%.</p>
+                <p><strong>💰 Após o Sweet Spot:</strong> Aumentar a taxa de poupança acima de ${sweetSpotRange.end}% traz retornos decrescentes. Por exemplo, poupar 50% reduz o tempo para <strong>${formatYears(lastRate.years)} anos</strong>, uma economia adicional de apenas ${formatYears(sweetSpotEnd.years - lastRate.years)} anos comparado aos ${sweetSpotRange.end}%.</p>
                 
-                <p><strong>💡 Recomendação:</strong> Foque em poupar entre 30-35% da sua renda. Se quiser reduzir ainda mais o tempo, considere <strong>aumentar sua renda</strong> em vez de aumentar ainda mais a taxa de poupança, pois isso terá um impacto proporcionalmente maior no tempo necessário para atingir sua meta.</p>
+                <p><strong>💡 Recomendação:</strong> Alcançar ~${sweetSpotRange.start}% já traz ganhos significativos. Esforçar-se até ${sweetSpotRange.end}% ainda vale a pena. Além disso, focar em <strong>aumentar sua renda</strong> é mais eficiente do que elevar ainda mais a taxa de poupança, pois terá um impacto proporcionalmente maior no tempo necessário para atingir sua meta.</p>
             `;
 
             insightsContent.innerHTML = html;
