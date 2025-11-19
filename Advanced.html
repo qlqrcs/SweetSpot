@@ -229,10 +229,27 @@ h1 {
   letter-spacing: var(--letter-spacing-tight);
 }
 
+.header-section {
+  text-align: center;
+  margin-bottom: var(--space-32);
+}
+
+.header-icon {
+  font-size: 48px;
+  margin-bottom: var(--space-12);
+}
+
 .subtitle {
   font-size: var(--font-size-lg);
   color: var(--color-text-secondary);
-  margin-bottom: var(--space-32);
+  margin-top: var(--space-8);
+}
+
+.section-title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--space-20);
+  color: var(--color-text);
 }
 
 .card {
@@ -242,6 +259,11 @@ h1 {
   box-shadow: var(--shadow-sm);
   padding: var(--space-24);
   margin-bottom: var(--space-24);
+  transition: box-shadow var(--duration-normal) var(--ease-standard);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
 }
 
 .form-grid {
@@ -254,6 +276,14 @@ h1 {
 .form-group {
   display: flex;
   flex-direction: column;
+  position: relative;
+}
+
+.input-hint {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  margin-top: var(--space-4);
+  font-style: italic;
 }
 
 label {
@@ -280,26 +310,51 @@ input:focus {
   box-shadow: var(--focus-ring);
 }
 
+input::placeholder {
+  color: var(--color-text-secondary);
+  opacity: 0.6;
+}
+
+
+
+.button-group {
+  display: flex;
+  gap: var(--space-12);
+}
+
 .btn {
   padding: var(--space-12) var(--space-24);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-medium);
   font-family: var(--font-family-base);
-  background-color: var(--color-primary);
-  color: var(--color-btn-primary-text);
   border: none;
   border-radius: var(--radius-base);
   cursor: pointer;
-  transition: background-color var(--duration-normal) var(--ease-standard);
-  width: 100%;
+  transition: all var(--duration-normal) var(--ease-standard);
+  flex: 1;
 }
 
-.btn:hover {
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-btn-primary-text);
+}
+
+.btn-primary:hover {
   background-color: var(--color-primary-hover);
 }
 
-.btn:active {
+.btn-primary:active {
   background-color: var(--color-primary-active);
+}
+
+.btn-secondary {
+  background-color: var(--color-secondary);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-secondary-hover);
 }
 
 .error-message {
@@ -333,22 +388,92 @@ thead {
 }
 
 th {
-  padding: var(--space-12) var(--space-16);
+  padding: var(--space-16) var(--space-16);
   text-align: left;
   font-weight: var(--font-weight-semibold);
   color: var(--color-text);
-  border-bottom: 1px solid var(--color-card-border-inner);
+  border-bottom: 2px solid var(--color-border);
+  font-size: var(--font-size-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 td {
-  padding: var(--space-12) var(--space-16);
+  padding: var(--space-16) var(--space-16);
   border-bottom: 1px solid var(--color-card-border-inner);
   color: var(--color-text);
+  font-size: var(--font-size-base);
 }
 
+.sweet-spot-highlight {
+  background: linear-gradient(135deg, rgba(var(--color-teal-500-rgb), 0.15) 0%, rgba(var(--color-teal-500-rgb), 0.05) 100%);
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-32);
+  margin-bottom: var(--space-24);
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+.sweet-spot-highlight::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(var(--color-teal-500-rgb), 0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.sweet-spot-highlight h2 {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+  margin-bottom: var(--space-8);
+}
+
+.sweet-spot-highlight .sweet-spot-range {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+  margin: var(--space-12) 0;
+}
+
+.sweet-spot-highlight .sweet-spot-subtitle {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-secondary);
+  margin-top: var(--space-8);
+}
+
+
+
 tr.sweet-spot {
-  background-color: var(--color-bg-3);
+  background-color: rgba(var(--color-teal-500-rgb), 0.1);
   font-weight: var(--font-weight-medium);
+  border-left: 3px solid var(--color-primary);
+}
+
+tr.sweet-spot td:first-child::before {
+  content: "⭐ ";
+  margin-right: var(--space-4);
+}
+
+tr.sweet-spot td:last-child {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-success);
+}
+
+tbody tr:nth-child(odd) {
+  background-color: rgba(var(--color-brown-600-rgb), 0.03);
+}
+
+@media (prefers-color-scheme: dark) {
+  tbody tr:nth-child(odd) {
+    background-color: rgba(var(--color-gray-400-rgb), 0.05);
+  }
 }
 
 tr:hover {
@@ -356,46 +481,94 @@ tr:hover {
 }
 
 tr.sweet-spot:hover {
-  background-color: var(--color-bg-3);
-  opacity: 0.9;
+  background-color: rgba(var(--color-teal-500-rgb), 0.15);
 }
 
-.insights {
-  background-color: var(--color-bg-1);
+.insights-section {
+  margin-top: var(--space-24);
+}
+
+.insights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-20);
+}
+
+.insight-card {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-card-border);
   padding: var(--space-20);
-  border-radius: var(--radius-base);
-  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--duration-normal) var(--ease-standard);
 }
 
-.insights h2 {
-  font-size: var(--font-size-xl);
+.insight-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.insight-card h3 {
+  font-size: var(--font-size-lg);
   font-weight: var(--font-weight-semibold);
   margin-bottom: var(--space-16);
   color: var(--color-text);
 }
 
-.insights p {
+.insight-card p {
   font-size: var(--font-size-base);
   color: var(--color-text);
-  margin-bottom: var(--space-12);
   line-height: 1.6;
+  margin-bottom: var(--space-12);
 }
 
-.insights p:last-child {
+.insight-card p:last-child {
   margin-bottom: 0;
 }
 
-.insights strong {
+.insight-card strong {
   color: var(--color-primary);
   font-weight: var(--font-weight-semibold);
 }
 
+.insight-highlight {
+  background-color: var(--color-bg-3);
+  padding: var(--space-16);
+  border-radius: var(--radius-base);
+  border-left: 4px solid var(--color-primary);
+  margin: var(--space-12) 0;
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
+}
+
+.insight-card ul {
+  margin: var(--space-12) 0;
+  padding-left: var(--space-24);
+  line-height: 1.8;
+}
+
+.insight-card li {
+  margin-bottom: var(--space-8);
+}
+
 #resultsSection {
   display: none;
+  animation: fadeIn var(--duration-normal) var(--ease-standard);
 }
 
 #resultsSection.show {
   display: block;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .text-center {
@@ -411,7 +584,19 @@ tr.sweet-spot:hover {
     font-size: var(--font-size-3xl);
   }
 
+  .header-icon {
+    font-size: 36px;
+  }
+
   .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .button-group {
+    flex-direction: column;
+  }
+
+  .insights-grid {
     grid-template-columns: 1fr;
   }
 
@@ -422,44 +607,99 @@ tr.sweet-spot:hover {
   th, td {
     padding: var(--space-8) var(--space-12);
   }
+
+  .sweet-spot-highlight h2 {
+    font-size: var(--font-size-2xl);
+  }
+
+  .sweet-spot-highlight .sweet-spot-range {
+    font-size: var(--font-size-3xl);
+  }
+
+  .comparison-card-rate {
+    font-size: var(--font-size-2xl);
+  }
+
+  .table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+.footer {
+  margin-top: var(--space-32);
+  padding: var(--space-20);
+  background-color: var(--color-bg-2);
+  border-radius: var(--radius-base);
+  border: 1px solid var(--color-border);
+  text-align: center;
+}
+
+.footer p {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin: 0;
 }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Calculadora de Sweet Spot de Poupança</h1>
-        <p class="subtitle">Descubra a taxa ideal de poupança para atingir suas metas financeiras</p>
+        <div class="header-section">
+            <div class="header-icon">💰</div>
+            <h1>Calculadora de Sweet Spot de Poupança</h1>
+            <p class="subtitle">Descubra o equilíbrio perfeito entre poupar e viver</p>
+        </div>
 
         <div class="card">
+            <h2 class="section-title">📊 Seus Dados</h2>
             <div class="error-message" id="errorMessage"></div>
 
             <form id="calculatorForm">
                 <div class="form-grid">
                     <div class="form-group">
-                        <label for="salary">Salário Mensal (R$)</label>
-                        <input type="number" id="salary" value="5000" min="0" step="100" required>
+                        <label for="salary">💵 Salário Mensal (R$)</label>
+                        <input type="number" id="salary" value="10000" min="0" step="100" required placeholder="Ex: 5.000" aria-label="Salário Mensal em Reais" aria-describedby="salary-hint">
+                        <span class="input-hint" id="salary-hint">ex: R$ 5.000</span>
                     </div>
 
                     <div class="form-group">
-                        <label for="goal">Meta Financeira (R$)</label>
-                        <input type="number" id="goal" value="1000000" min="0" step="10000" required>
+                        <label for="goal">🎯 Meta Financeira (R$)</label>
+                        <input type="number" id="goal" value="1000000" min="0" step="10000" required placeholder="Ex: 1.000.000" aria-label="Meta Financeira em Reais" aria-describedby="goal-hint">
+                        <span class="input-hint" id="goal-hint">ex: R$ 1.000.000</span>
                     </div>
 
                     <div class="form-group">
-                        <label for="returnRate">Retorno Anual Esperado (%)</label>
-                        <input type="number" id="returnRate" value="7" min="0" max="100" step="0.1" required>
+                        <label for="initialPatrimony">💎 Patrimônio Inicial (R$)</label>
+                        <input type="number" id="initialPatrimony" value="0" min="0" step="10000" required placeholder="Ex: 50.000" aria-label="Patrimônio Inicial em Reais" aria-describedby="patrimony-hint">
+                        <span class="input-hint" id="patrimony-hint">ex: R$ 50.000</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="returnRate">📈 Retorno Anual Esperado (%)</label>
+                        <input type="number" id="returnRate" value="7" min="0" max="100" step="0.1" required placeholder="Ex: 7" aria-label="Retorno Anual Esperado em Percentual" aria-describedby="return-hint">
+                        <span class="input-hint" id="return-hint">ex: 7%</span>
                     </div>
                 </div>
 
-                <button type="submit" class="btn">Calcular</button>
+
+
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary" aria-label="Calcular Sweet Spot de Poupança">🧮 Calcular Sweet Spot</button>
+                    <button type="button" class="btn btn-secondary" onclick="resetForm()" aria-label="Limpar formulário">🔄 Limpar</button>
+                </div>
             </form>
         </div>
 
-        <div id="resultsSection">
+        <div id="resultsSection" role="region" aria-label="Resultados da Calculadora">
+            <div id="sweetSpotCard" class="sweet-spot-highlight" role="status" aria-live="polite"></div>
+
+
+
             <div class="card">
-                <h2 style="font-size: var(--font-size-2xl); margin-bottom: var(--space-16); font-weight: var(--font-weight-semibold);">Resultados</h2>
+                <h2 style="font-size: var(--font-size-2xl); margin-bottom: var(--space-16); font-weight: var(--font-weight-semibold);">📋 Tabela Detalhada</h2>
                 <div class="table-container">
-                    <table id="resultsTable">
+                    <table id="resultsTable" aria-label="Tabela de resultados por taxa de poupança">
                         <thead>
                             <tr>
                                 <th>Taxa de Poupança (%)</th>
@@ -474,35 +714,55 @@ tr.sweet-spot:hover {
                 </div>
             </div>
 
-            <div class="insights" id="insightsSection">
-                <h2>💡 Insights e Recomendações</h2>
-                <div id="insightsContent"></div>
+            <div class="insights-section" role="complementary" aria-label="Insights Personalizados">
+                <h2 class="section-title">💡 Insights Personalizados</h2>
+                <div class="insights-grid">
+                    <div class="insight-card" id="patrimonioCard"></div>
+                    <div class="insight-card" id="recomendacaoCard"></div>
+                    <div class="insight-card" id="otimizacaoCard"></div>
+                </div>
             </div>
         </div>
+
+        <footer class="footer">
+            <p><strong>⚠️ Aviso Legal:</strong> Esta calculadora fornece estimativas baseadas nos valores informados e pressupostos simplificados. Os resultados não constituem aconselhamento financeiro profissional. Consulte um especialista para decisões de investimento.</p>
+        </footer>
     </div>
 
     <script>
-        // Calculate years needed to reach goal
-        function calculateYears(monthlyContribution, goalAmount, annualReturn) {
-            if (monthlyContribution <= 0) return null;
+        // Calculate years needed to reach goal with initial patrimony
+        // Formula: FV = PV(1+r)^n + Pmt × ((1+r)^n - 1) / r
+        function calculateYears(monthlyContribution, goalAmount, annualReturn, initialPatrimony = 0) {
+            if (monthlyContribution <= 0 && initialPatrimony <= 0) return null;
             
             const r = annualReturn / 100;
-            const monthlyRate = r / 12;
             
-            // Using future value formula for annuity
-            // FV = Pmt × ((1+r)^n - 1) / r
-            // Solving for n: n = log(1 + (FV × r / Pmt)) / log(1 + r)
-            
-            if (r === 0) {
-                // If no return, simple division
-                return goalAmount / (monthlyContribution * 12);
+            // Special case: goal already met
+            if (initialPatrimony >= goalAmount) {
+                return 0;
             }
             
-            const yearlyContribution = monthlyContribution * 12;
-            const numerator = Math.log(1 + (goalAmount * r / yearlyContribution));
-            const denominator = Math.log(1 + r);
+            // Special case: no return rate
+            if (r === 0) {
+                const remaining = goalAmount - initialPatrimony;
+                return remaining / (monthlyContribution * 12);
+            }
             
-            return numerator / denominator;
+            // Iterative approach to find n
+            // FV = PV(1+r)^n + Pmt × ((1+r)^n - 1) / r
+            const yearlyContribution = monthlyContribution * 12;
+            
+            for (let n = 0.1; n <= 100; n += 0.1) {
+                const futureValuePV = initialPatrimony * Math.pow(1 + r, n);
+                const futureValuePmt = yearlyContribution * (Math.pow(1 + r, n) - 1) / r;
+                const totalFV = futureValuePV + futureValuePmt;
+                
+                if (totalFV >= goalAmount) {
+                    return n;
+                }
+            }
+            
+            return null; // Goal not reachable in 100 years
         }
 
         // Format currency
@@ -532,12 +792,28 @@ tr.sweet-spot:hover {
         }
 
         // Calculate and display results
-        function calculate(salary, goal, returnRate) {
+        function calculate(salary, goal, returnRate, initialPatrimony) {
             hideError();
 
             // Validation
-            if (salary <= 0 || goal <= 0 || returnRate < 0) {
-                showError('Por favor, insira valores válidos e positivos.');
+            if (salary <= 0) {
+                showError('⚠️ O salário mensal deve ser maior que zero.');
+                return;
+            }
+            if (goal <= 0) {
+                showError('⚠️ A meta financeira deve ser maior que zero.');
+                return;
+            }
+            if (returnRate < 0 || returnRate > 100) {
+                showError('⚠️ O retorno anual deve estar entre 0% e 100%.');
+                return;
+            }
+            if (initialPatrimony < 0) {
+                showError('⚠️ O patrimônio inicial não pode ser negativo.');
+                return;
+            }
+            if (goal <= initialPatrimony) {
+                showError('⚠️ A meta financeira deve ser maior que o patrimônio inicial.');
                 return;
             }
 
@@ -547,10 +823,10 @@ tr.sweet-spot:hover {
             // Calculate for each savings rate from 5% to 50%
             for (let rate = 5; rate <= 50; rate += 5) {
                 const monthlySavings = salary * (rate / 100);
-                const years = calculateYears(monthlySavings, goal, returnRate);
+                const years = calculateYears(monthlySavings, goal, returnRate, initialPatrimony);
                 
                 if (years === null || !isFinite(years)) {
-                    showError('Não foi possível calcular. Verifique se os valores estão corretos.');
+                    showError('⚠️ Não foi possível calcular com esses valores. Tente ajustar sua meta ou salário.');
                     return;
                 }
 
@@ -574,13 +850,13 @@ tr.sweet-spot:hover {
                 result.isSweetSpot = result.rate >= sweetSpotRange.start && result.rate <= sweetSpotRange.end;
             });
 
-            displayResults(results, salary, goal, returnRate, sweetSpotRange);
+            displayResults(results, salary, goal, returnRate, sweetSpotRange, initialPatrimony);
         }
 
         // Identify sweet spot dynamically
         function identifySweetSpot(results) {
-            const SIGNIFICANT_REDUCTION = 3; // years
-            const MARGINAL_REDUCTION = 2; // years
+            const SIGNIFICANT_REDUCTION = 2.5; // years
+            const MARGINAL_REDUCTION = 1.5; // years
             
             let sweetSpotStart = null;
             let sweetSpotEnd = null;
@@ -620,8 +896,20 @@ tr.sweet-spot:hover {
             return { start: sweetSpotStart, end: sweetSpotEnd };
         }
 
+
+
+        // Reset form
+        function resetForm() {
+            document.getElementById('salary').value = 10000;
+            document.getElementById('goal').value = 1000000;
+            document.getElementById('initialPatrimony').value = 0;
+            document.getElementById('returnRate').value = 7;
+            document.getElementById('resultsSection').classList.remove('show');
+            hideError();
+        }
+
         // Display results in table
-        function displayResults(results, salary, goal, returnRate, sweetSpotRange) {
+        function displayResults(results, salary, goal, returnRate, sweetSpotRange, initialPatrimony) {
             const tableBody = document.getElementById('tableBody');
             tableBody.innerHTML = '';
 
@@ -645,12 +933,86 @@ tr.sweet-spot:hover {
                 tableBody.appendChild(row);
             });
 
-            generateInsights(results, salary, goal, returnRate, sweetSpotRange);
+            displaySweetSpotCard(results, sweetSpotRange);
+            generateInsights(results, salary, goal, returnRate, sweetSpotRange, initialPatrimony);
             document.getElementById('resultsSection').classList.add('show');
+            
+            // Scroll to results
+            setTimeout(() => {
+                document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
         }
 
+        // Display sweet spot highlight card
+        function displaySweetSpotCard(results, sweetSpotRange) {
+            const sweetStart = results.find(r => r.rate === sweetSpotRange.start);
+            const sweetEnd = results.find(r => r.rate === sweetSpotRange.end);
+            
+            const avgYears = (sweetStart.years + sweetEnd.years) / 2;
+            
+            const card = document.getElementById('sweetSpotCard');
+            card.innerHTML = `
+                <div style="font-size: 48px; margin-bottom: var(--space-12);">⭐</div>
+                <h2>Seu Sweet Spot é:</h2>
+                <div class="sweet-spot-range">${sweetSpotRange.start}% - ${sweetSpotRange.end}%</div>
+                <p class="sweet-spot-subtitle">Período estimado: ${formatYears(avgYears)} anos</p>
+            `;
+        }
+
+
+
         // Generate insights
-        function generateInsights(results, salary, goal, returnRate, sweetSpotRange) {
+        function generateInsights(results, salary, goal, returnRate, sweetSpotRange, initialPatrimony) {
+            // For impact of initial patrimony, compare with and without
+            const patrimonyFormatted = formatCurrency(initialPatrimony);
+            const salaryFormatted = formatCurrency(salary);
+            const goalFormatted = formatCurrency(goal);
+            
+            // Years for sweet spot lowest rate with and without initial patrimony
+            const sweetSpotStartRate = sweetSpotRange.start;
+            const sweetSpotEndRate = sweetSpotRange.end;
+            const sweetStart = results.find(r => r.rate === sweetSpotStartRate);
+            const sweetEnd = results.find(r => r.rate === sweetSpotEndRate);
+            // Calculate years for the same conditions but no initial patrimony:
+            function getYearsNoPatrimony(rate) {
+                const monthlySavings = salary * (rate / 100);
+                return calculateYears(monthlySavings, goal, returnRate, 0);
+            }
+            const yearsWithPatrimony = sweetStart.years;
+            const yearsNoPatrimony = getYearsNoPatrimony(sweetSpotStartRate);
+            const anosEconomizados = yearsNoPatrimony - yearsWithPatrimony;
+            const anosEconomizadosFmt = anosEconomizados > 0 ? `Você economizou <strong>${formatYears(anosEconomizados)}</strong> anos!` : "";
+
+            // Coast FIRE detection
+            let coastFire = false;
+            if (initialPatrimony >= 0.5 * goal) {
+                coastFire = true;
+            }
+
+            // Insights sobre o patrimônio inicial
+            let impactoPatrimonio = "";
+            if (initialPatrimony === 0) {
+                impactoPatrimonio = `<strong>Você está começando do zero.</strong> Cada real investido aumenta o efeito dos juros compostos!`;
+            } else if (coastFire) {
+                impactoPatrimonio = `<strong>Parabéns! Seu patrimônio inicial já significa <span style='color: var(--color-success)'>Coast FIRE</span> (≥50% da meta). Os juros compostos estão trabalhando fortemente ao seu favor.</strong>\n<br>${anosEconomizadosFmt}`;
+            } else {
+                impactoPatrimonio = `Com seu patrimônio inicial de R$ <strong>${patrimonyFormatted}</strong>, ${anosEconomizadosFmt} Os juros compostos já aceleram sua jornada.`;
+            }
+
+            // Comparação
+            const comparacaoAnosSem = formatYears(yearsNoPatrimony);
+            const comparacaoAnosCom = formatYears(yearsWithPatrimony);
+            let comparacaoMsg = `<strong>Comparação:</strong> Sem patrimônio inicial: <strong>${comparacaoAnosSem} anos</strong>. Com patrimônio atual: <strong>${comparacaoAnosCom} anos</strong> para atingir R$ ${goalFormatted} economizando a taxa sweet spot`;
+
+            // Recomendações
+            let recomendacao = "";
+            if (coastFire) {
+                recomendacao = `Seu foco pode ser manter o investimento. Você pode optar por reduzir aportes e deixar o tempo/juro composto trabalhar por você (Coast FIRE)!`;
+            } else if (initialPatrimony === 0) {
+                recomendacao = `Construa uma reserva de emergência, depois foque em aportar consistentemente.`;
+            } else {
+                recomendacao = `Continue investindo com disciplina. Reforçar o patrimônio inicial acelera ainda mais!`;
+            }
             const insightsContent = document.getElementById('insightsContent');
             
             // Find sweet spot data
@@ -669,31 +1031,87 @@ tr.sweet-spot:hover {
             const yearsReductionInSweetSpot = sweetSpotStart.years - sweetSpotEnd.years;
             const additionalSavings = sweetSpotEnd.monthlySavings - sweetSpotStart.monthlySavings;
 
-            let html = `
-                <p><strong>🎯 Sweet Spot Identificado: ${sweetSpotRange.start}% - ${sweetSpotRange.end}%</strong></p>
+            // Populate Patrimônio Card
+            const patrimonioCard = document.getElementById('patrimonioCard');
+            let patrimonioHTML = '<h3>💎 Impacto do Patrimônio Inicial</h3>';
+            
+            if (initialPatrimony === 0) {
+                patrimonioHTML += `<p>Você está começando do zero. Cada real investido hoje aumenta o efeito dos juros compostos!</p>`;
+                patrimonioHTML += `<div class="insight-highlight"><strong>Dica:</strong> Construa primeiro uma reserva de emergência (3-6 meses de despesas) antes de investir agressivamente.</div>`;
+            } else {
+                patrimonioHTML += `<p>Seu patrimônio inicial: <strong>R$ ${patrimonyFormatted}</strong></p>`;
+                patrimonioHTML += `<p>${impactoPatrimonio}</p>`;
                 
-                <p>Esta faixa representa o ponto ideal entre esforço e resultado para seu cenário específico:</p>
-                <ul style="margin-left: var(--space-20); margin-top: var(--space-8); margin-bottom: var(--space-12);">
-                    <li>No <strong>início do sweet spot (${sweetSpotRange.start}%)</strong>: ${formatYears(sweetSpotStart.years)} anos para atingir R$ ${formatCurrency(goal)}</li>
-                    <li>No <strong>final do sweet spot (${sweetSpotRange.end}%)</strong>: ${formatYears(sweetSpotEnd.years)} anos para atingir a meta</li>
-                    <li><strong>Ganho:</strong> ${formatYears(yearsReductionInSweetSpot)} anos economizados com um esforço adicional de R$ ${formatCurrency(additionalSavings)}/mês</li>
-                </ul>
-                
-                <p><strong>📊 Maiores Ganhos:</strong> As maiores reduções de tempo ocorrem nas transições iniciais:
-                <ul style="margin-left: var(--space-20); margin-top: var(--space-8);">`;
+                if (yearsNoPatrimony && anosEconomizados > 0) {
+                    patrimonioHTML += `<div class="insight-highlight">`;
+                    patrimonioHTML += `<strong>Comparação:</strong><br>`;
+                    patrimonioHTML += `Sem patrimônio: <strong>${formatYears(yearsNoPatrimony)} anos</strong><br>`;
+                    patrimonioHTML += `Com patrimônio: <strong>${formatYears(yearsWithPatrimony)} anos</strong><br>`;
+                    patrimonioHTML += `<span style="color: var(--color-success); font-weight: var(--font-weight-semibold);">Economia: ${formatYears(anosEconomizados)} anos! 🎉</span>`;
+                    patrimonioHTML += `</div>`;
+                }
+            }
+            patrimonioCard.innerHTML = patrimonioHTML;
 
-            sortedByReduction.forEach(r => {
-                html += `<li>De ${r.rate - 5}% para ${r.rate}%: <strong>${formatYears(r.reduction)} anos</strong> reduzidos</li>`;
-            });
+            // Populate Recomendação Card
+            const recomendacaoCard = document.getElementById('recomendacaoCard');
+            let recomendacaoHTML = '<h3>✨ Recomendação Personalizada</h3>';
+            recomendacaoHTML += `<p>Atingir <strong>${sweetSpotRange.start}% - ${sweetSpotRange.end}%</strong> de poupança já traz ganhos significativos:</p>`;
+            recomendacaoHTML += `<ul>`;
+            recomendacaoHTML += `<li>Em ${sweetSpotRange.start}%: <strong>${formatYears(sweetSpotStart.years)} anos</strong> para meta</li>`;
+            recomendacaoHTML += `<li>Em ${sweetSpotRange.end}%: <strong>${formatYears(sweetSpotEnd.years)} anos</strong> para meta</li>`;
+            recomendacaoHTML += `<li>Ganho no sweet spot: <strong>${formatYears(yearsReductionInSweetSpot)} anos</strong></li>`;
+            recomendacaoHTML += `</ul>`;
+            
+            if (coastFire) {
+                recomendacaoHTML += `<div class="insight-highlight" style="border-color: var(--color-success);">`;
+                recomendacaoHTML += `<strong>🌴 Coast FIRE atingido!</strong> Você pode reduzir aportes e deixar o tempo trabalhar por você.`;
+                recomendacaoHTML += `</div>`;
+            } else {
+                recomendacaoHTML += `<p>Acima de ${sweetSpotRange.end}%, os ganhos são marginais. <strong>Focar em aumentar renda pode ser mais eficiente!</strong></p>`;
+            }
+            recomendacaoCard.innerHTML = recomendacaoHTML;
 
-            html += `</ul></p>
+            // Populate Otimização Card
+            const otimizacaoCard = document.getElementById('otimizacaoCard');
+            let otimizacaoHTML = '<h3>🎯 Próximas Ações</h3>';
+            
+            const sweetSpotMonthly = sweetSpotStart.monthlySavings;
+            const percentOfSalary = (sweetSpotMonthly / salary * 100).toFixed(1);
+            
+            otimizacaoHTML += `<p><strong>Para começar:</strong> Poupe <strong>R$ ${formatCurrency(sweetSpotMonthly)}</strong> por mês (${percentOfSalary}% do seu salário)</p>`;
+            otimizacaoHTML += `<ul>`;
+            
+            if (coastFire) {
+                otimizacaoHTML += `<li>Mantenha investimentos em ativos com retorno de ${returnRate}%</li>`;
+                otimizacaoHTML += `<li>Considere reduzir ritmo de trabalho (Coast FIRE)</li>`;
+                otimizacaoHTML += `<li>Foque em qualidade de vida</li>`;
+            } else if (initialPatrimony === 0) {
+                otimizacaoHTML += `<li>Crie reserva de emergência (6 meses)</li>`;
+                otimizacaoHTML += `<li>Automatize aportes mensais</li>`;
+                otimizacaoHTML += `<li>Estude investimentos de longo prazo</li>`;
+                otimizacaoHTML += `<li>Revise gastos para atingir ${sweetSpotRange.start}%</li>`;
+            } else {
+                otimizacaoHTML += `<li>Mantenha aportes consistentes</li>`;
+                otimizacaoHTML += `<li>Revise gastos para atingir o sweet spot</li>`;
+                otimizacaoHTML += `<li>Busque oportunidades de aumentar renda</li>`;
+                otimizacaoHTML += `<li>Rebalanceie portfólio anualmente</li>`;
+            }
+            
+            otimizacaoHTML += `</ul>`;
+            
+            if (sweetSpotRange.end < 50) {
+                const aggressive = results[results.length - 1];
+                const extraYearsSaved = sweetSpotEnd.years - aggressive.years;
+                const extraMonthlyCost = aggressive.monthlySavings - sweetSpotEnd.monthlySavings;
                 
-                <p><strong>💰 Após o Sweet Spot:</strong> Aumentar a taxa de poupança acima de ${sweetSpotRange.end}% traz retornos decrescentes. Por exemplo, poupar 50% reduz o tempo para <strong>${formatYears(lastRate.years)} anos</strong>, uma economia adicional de apenas ${formatYears(sweetSpotEnd.years - lastRate.years)} anos comparado aos ${sweetSpotRange.end}%.</p>
-                
-                <p><strong>💡 Recomendação:</strong> Alcançar ~${sweetSpotRange.start}% já traz ganhos significativos. Esforçar-se até ${sweetSpotRange.end}% ainda vale a pena. Além disso, focar em <strong>aumentar sua renda</strong> é mais eficiente do que elevar ainda mais a taxa de poupança, pois terá um impacto proporcionalmente maior no tempo necessário para atingir sua meta.</p>
-            `;
-
-            insightsContent.innerHTML = html;
+                otimizacaoHTML += `<div class="insight-highlight" style="border-color: var(--color-warning);">`;
+                otimizacaoHTML += `<strong>⚠️ Atenção:</strong> Poupar 50% economizaria apenas mais <strong>${formatYears(extraYearsSaved)} anos</strong>, `;
+                otimizacaoHTML += `mas custaria <strong>R$ ${formatCurrency(extraMonthlyCost)}</strong> a mais por mês. Avalie o custo-benefício!`;
+                otimizacaoHTML += `</div>`;
+            }
+            
+            otimizacaoCard.innerHTML = otimizacaoHTML;
         }
 
         // Form submission handler
@@ -703,8 +1121,9 @@ tr.sweet-spot:hover {
             const salary = parseFloat(document.getElementById('salary').value);
             const goal = parseFloat(document.getElementById('goal').value);
             const returnRate = parseFloat(document.getElementById('returnRate').value);
+            const initialPatrimony = parseFloat(document.getElementById('initialPatrimony').value);
 
-            calculate(salary, goal, returnRate);
+            calculate(salary, goal, returnRate, initialPatrimony);
         });
 
         // Calculate with default values on page load
@@ -712,8 +1131,9 @@ tr.sweet-spot:hover {
             const salary = parseFloat(document.getElementById('salary').value);
             const goal = parseFloat(document.getElementById('goal').value);
             const returnRate = parseFloat(document.getElementById('returnRate').value);
+            const initialPatrimony = parseFloat(document.getElementById('initialPatrimony').value);
             
-            calculate(salary, goal, returnRate);
+            calculate(salary, goal, returnRate, initialPatrimony);
         });
     </script>
 </body>
